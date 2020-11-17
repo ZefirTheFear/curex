@@ -11,15 +11,15 @@ const onClick = (action: ScrollActionType, dispatch: Dispatch) => {
 
 const navItems = (dispatch: Dispatch) => [
   {
-    title: "калькулятор",
-    onClick: () => {
-      onClick(scrollActions.scrollToCalc(), dispatch);
-    }
-  },
-  {
     title: "почему мы",
     onClick: () => {
       onClick(scrollActions.scrollToAboutUs(), dispatch);
+    }
+  },
+  {
+    title: "калькулятор",
+    onClick: () => {
+      onClick(scrollActions.scrollToCalc(), dispatch);
     }
   },
   {

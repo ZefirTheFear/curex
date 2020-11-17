@@ -1,7 +1,7 @@
 import { Currency } from "./../../models/currency";
 import { Percentage } from "./../../store/actions/currencyActions/currencyActionTypes";
 
-import globalStyles from "../../utils/css/variables.scss";
+import globalStyles from "../css/variables.module.scss";
 
 export const validateInput = (value: string) => {
   if (+value < 0) {
@@ -69,7 +69,7 @@ export const convertCurrency = (
 };
 
 export const scrollToNode = (node: HTMLElement) => {
-  const headerOffset = parseInt(globalStyles.headerHeight);
+  const headerOffset = parseInt(globalStyles.headerHeight, 10);
   window.scrollTo({
     top: window.pageYOffset + node.getBoundingClientRect().top - headerOffset,
     behavior: "smooth"
