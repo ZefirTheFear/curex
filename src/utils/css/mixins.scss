@@ -1,0 +1,38 @@
+@import "./variables";
+
+@mixin app-inner-width {
+  width: $app-inner-width;
+  max-width: 1200px;
+}
+
+@mixin section {
+  @include app-inner-width;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+
+  @media (max-width: 767px) {
+    padding: 0.5rem;
+  }
+}
+
+@mixin button {
+  background: $main-app-color;
+  border-radius: $border-radius;
+  padding: 0.5rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: $main-transition;
+
+  &:active {
+    background: darken($main-app-color, 30);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background: darken($main-app-color, 30);
+    }
+  }
+}

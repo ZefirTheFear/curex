@@ -1,0 +1,6 @@
+@import "../../utils/css/variables";
+@import "../../utils/css/mixins";
+
+.why-us__inner {
+  @include section;
+}
