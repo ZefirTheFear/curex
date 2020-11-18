@@ -7,7 +7,7 @@ import Spinner from "../Spinner/Spinner";
 import SomethingWentWrong from "../SomethingWentWrong/SomethingWentWrong";
 import { ReactComponent as SWWImg } from "../../assets/errorImgs/client-server-error.svg";
 import ExchangeData from "../ExchangeData/ExchangeData";
-// import TableForCalc from "../CalculatorTable/CalculatorTable";
+import TableForCalc from "../CalculatorTable/CalculatorTable";
 
 import { Currency } from "../../models/currency";
 
@@ -255,7 +255,7 @@ const Calculator: React.FC = () => {
               onChangeInputAmount={changeCurrencyToCustomerAmount}
             />
           </div>
-          {/* <TableForCalc /> */}
+          {!(isFetchingBinanceData || isFetchingOwnData) && <TableForCalc />}
         </div>
       </section>
     </>

@@ -30,13 +30,14 @@ const ExchangeData: React.FC<ExchangeDataProps> = ({
 
   const closeOptions = useSelector((state: RootState) => state.currenciesState.closeOptions);
 
-  const sectionsListElem = useRef<HTMLDivElement>(null!);
+  const optionsListElem = useRef<HTMLDivElement>(null!);
+  const selectedElem = useRef<HTMLDivElement>(null!);
   const isMount = useRef(false);
 
   const [isOpenedOptions, setIsOpenedOptions] = useState(false);
 
   const toggleIsOpenedOptions = useCallback(() => {
-    const elem = sectionsListElem.current;
+    const elem = optionsListElem.current;
     if (isOpenedOptions) {
       elem.style.borderWidth = "0";
       elem.style.marginTop = "";
@@ -52,12 +53,10 @@ const ExchangeData: React.FC<ExchangeDataProps> = ({
   }, [isOpenedOptions]);
 
   const closeCurrenciesOptions = useCallback(() => {
-    const elem = sectionsListElem.current;
+    const elem = optionsListElem.current;
+    elem.style.borderWidth = "0";
     elem.style.height = "0";
     elem.style.marginTop = "";
-    // ----
-    elem.style.display = "none";
-    // ----
     setIsOpenedOptions(false);
   }, []);
 
@@ -75,6 +74,22 @@ const ExchangeData: React.FC<ExchangeDataProps> = ({
     [dispatch, options, status, toggleIsOpenedOptions]
   );
 
+  const closeOpenedOptions = useCallback(
+    (e: MouseEvent) => {
+      let element = e.target as HTMLElement;
+      while (element !== document.body) {
+        if (element === selectedElem.current) {
+          return;
+        }
+        element = element.parentElement!;
+      }
+      if (isOpenedOptions) {
+        closeCurrenciesOptions();
+      }
+    },
+    [closeCurrenciesOptions, isOpenedOptions]
+  );
+
   useEffect(() => {
     if (isMount.current) {
       closeCurrenciesOptions();
@@ -82,11 +97,18 @@ const ExchangeData: React.FC<ExchangeDataProps> = ({
     isMount.current = true;
   }, [closeOptions, closeCurrenciesOptions]);
 
+  useEffect(() => {
+    window.addEventListener("click", closeOpenedOptions);
+    return () => {
+      window.removeEventListener("click", closeOpenedOptions);
+    };
+  }, [closeOpenedOptions]);
+
   return (
     <div className="exchange-data">
       <div className="exchange-data__title">{title}</div>
       <div className="exchange-data__selector">
-        <div className="exchange-data__selected" onClick={toggleIsOpenedOptions}>
+        <div className="exchange-data__selected" onClick={toggleIsOpenedOptions} ref={selectedElem}>
           <img
             className="exchange-data__currency-img"
             src={currentCurrency.img}
@@ -102,7 +124,7 @@ const ExchangeData: React.FC<ExchangeDataProps> = ({
             <FaAngleDown />
           </span>
         </div>
-        <div className="exchange-data__select-options" ref={sectionsListElem}>
+        <div className="exchange-data__select-options" ref={optionsListElem}>
           {options.map((item) => (
             <div
               className="exchange-data__select-options-item"

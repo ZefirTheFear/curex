@@ -5,7 +5,7 @@ import { Currency } from "./../../models/currency";
 import * as currencyActionTypes from "../actions/currencyActions/currencyActionTypes";
 
 import ImgBTC from "../../assets/currenciesLogo/BTC.png";
-import ImgUSD from "../../assets/currenciesLogo/usd.png";
+import ImgUSD from "../../assets/currenciesLogo/USD.png";
 
 interface CurrencyState {
   closeOptions: number;
