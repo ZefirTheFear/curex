@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import MenuMobile from "./components/MenuMobile/MenuMobile";
 import Hero from "./components/Hero/Hero";
 import WhyUs from "./components/WhyUs/WhyUs";
+import Calculator from "./components/Calculator/Calculator";
 
 import "./App.scss";
 
@@ -19,6 +20,7 @@ const App: React.FC = () => {
       <MenuMobile />
       <Hero />
       <WhyUs />
+      <Calculator />
     </div>
   );
 };

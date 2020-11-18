@@ -16,7 +16,7 @@
   justify-content: center;
   align-items: center;
   height: calc((100vh - #{$header-height}) / 4);
-  background: $app-black;
+  background: $app-black-color;
   color: $main-app-color;
   font-size: 1.2rem;
   text-transform: uppercase;
@@ -25,7 +25,7 @@
   transition: $main-transition;
 
   @mixin hover {
-    color: $menu-hover;
+    color: $app-grey-color;
   }
   &:active {
     @include hover;

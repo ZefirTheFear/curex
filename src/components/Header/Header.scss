@@ -53,7 +53,7 @@
   transition: $main-transition;
 
   @mixin hover {
-    color: $menu-hover;
+    color: $app-grey-color;
   }
   &:active {
     @include hover;
@@ -81,7 +81,7 @@
 
   @mixin hover {
     .header__menu-btn-line {
-      background: $menu-hover;
+      background: $app-grey-color;
     }
   }
   &:active {
