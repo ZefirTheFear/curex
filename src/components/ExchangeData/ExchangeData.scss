@@ -14,16 +14,6 @@ input[type="number"] {
 }
 // -------------------
 
-@mixin data {
-  width: 250px;
-  height: 50px;
-  background: $app-black-color;
-  color: $light-color;
-  border: 1px solid $app-grey-color;
-  border-radius: $border-radius;
-  transition: $main-transition;
-}
-
 .exchange-data__title {
   font-size: 2rem;
   text-transform: uppercase;
@@ -32,7 +22,7 @@ input[type="number"] {
 }
 
 .exchange-data__selected {
-  @include data;
+  @include input;
   position: relative;
   z-index: 2;
   display: flex;
@@ -79,7 +69,7 @@ input[type="number"] {
 }
 
 .exchange-data__select-options {
-  @include data;
+  @include input;
   position: absolute;
   height: 0;
   padding: 0;
@@ -115,7 +105,7 @@ input[type="number"] {
 }
 
 .exchange-data__input {
-  @include data;
+  @include input;
   margin-top: 1rem;
   padding: 10px 15px;
   font-size: 2rem;
