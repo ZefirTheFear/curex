@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { TiArrowRepeat } from "react-icons/ti";
 
 import Spinner from "../Spinner/Spinner";
-import SomethingWentWrong from "../SomethingWentWrong/SomethingWentWrong";
+import Modal from "../Modal/Modal";
 import { ReactComponent as SWWImg } from "../../assets/errorImgs/client-server-error.svg";
 import ExchangeData from "../ExchangeData/ExchangeData";
 import TableForCalc from "../CalculatorTable/CalculatorTable";
@@ -218,9 +218,9 @@ const Calculator: React.FC = () => {
     <>
       {(isFetchingBinanceData || isFetchingOwnData) && <Spinner />}
       {isSomethingWentWrong && (
-        <SomethingWentWrong
+        <Modal
           Img={SWWImg}
-          closeSWWModal={closeSWWModal}
+          closeModal={closeSWWModal}
           msg={"что-то пошло не так. попробуйте еще раз"}
         />
       )}

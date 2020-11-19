@@ -81,7 +81,12 @@ const ExchangeData: React.FC<ExchangeDataProps> = ({
         if (element === selectedElem.current) {
           return;
         }
-        element = element.parentElement!;
+        const parentElement = element.parentElement;
+        if (parentElement) {
+          element = parentElement;
+        } else {
+          return;
+        }
       }
       if (isOpenedOptions) {
         closeCurrenciesOptions();

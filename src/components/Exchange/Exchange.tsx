@@ -2,8 +2,9 @@ import React, { useRef, useState, useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Spinner from "../Spinner/Spinner";
-import SomethingWentWrong from "../SomethingWentWrong/SomethingWentWrong";
+import Modal from "../Modal/Modal";
 import { ReactComponent as SWWImg } from "../../assets/errorImgs/client-server-error.svg";
+import { ReactComponent as SuccessImg } from "../../assets/success/success.svg";
 
 import { RootState } from "../../store/store";
 import * as scrollActions from "../../store/actions/scrollActions/scrollActionCreators";
@@ -28,6 +29,7 @@ const Exchange: React.FC = () => {
 
   const [isSomethingWentWrong, setIsSomethingWentWrong] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSendingDataSuccess, setIsSendingDataSuccess] = useState(false);
 
   const scrollToContacts = useCallback(() => {
     dispatch(scrollActions.scrollToContacts());
@@ -93,7 +95,7 @@ const Exchange: React.FC = () => {
         setNumber("");
         setComment("");
         setIsLoading(false);
-        // setIsModalOpen(true);
+        setIsSendingDataSuccess(true);
       } catch (error) {
         setIsLoading(false);
         return setIsSomethingWentWrong(true);
@@ -106,6 +108,10 @@ const Exchange: React.FC = () => {
     setIsSomethingWentWrong(false);
   }, []);
 
+  const closeSuccessModal = useCallback(() => {
+    setIsSendingDataSuccess(false);
+  }, []);
+
   useEffect(() => {
     if (isMount.current && exchangeSection.current) {
       scrollToNode(exchangeSection.current);
@@ -113,23 +119,18 @@ const Exchange: React.FC = () => {
     isMount.current = true;
   }, [scrollToExchange]);
 
-  // if (isFetchingError) {
-  //   return <Modal closeModal={closeModal} text="что-то пошло не так. попробуйте еще раз" />;
-  // }
-
-  // if (isModalOpen) {
-  //   return <Modal closeModal={closeModal} text="данные отправлены" />;
-  // }
-
   return (
     <>
       {isLoading && <Spinner />}
       {isSomethingWentWrong && (
-        <SomethingWentWrong
+        <Modal
           Img={SWWImg}
-          closeSWWModal={closeSWWModal}
+          closeModal={closeSWWModal}
           msg={"что-то пошло не так. попробуйте еще раз"}
         />
+      )}
+      {isSendingDataSuccess && (
+        <Modal Img={SuccessImg} closeModal={closeSuccessModal} msg={"данные отправлены"} />
       )}
       <section className="exchange" ref={exchangeSection}>
         <div className="exchange__inner">
@@ -140,55 +141,49 @@ const Exchange: React.FC = () => {
               контактов&nbsp;
             </span>
           </div>
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            <form className="exchange__form" onSubmit={sendData}>
-              <div className="exchange__required">* - обязательные поля</div>
-              <div className="exchange__inputs">
-                <div className="exchange__form-group">
-                  <input
-                    type="text"
-                    className={"exchange__input" + (isNameValid ? "" : " exchange__input_invalid")}
-                    placeholder="имя*"
-                    autoComplete="off"
-                    name="name"
-                    value={name}
-                    onChange={onChange}
-                    onFocus={onFocusInput}
-                  />
-                  {isNameValid ? null : <small>надо как-то себя назвать</small>}
-                </div>
-                <div className="exchange__form-group">
-                  <input
-                    type="tel"
-                    className={
-                      "exchange__input" + (isNumberValid ? "" : " exchange__input_invalid")
-                    }
-                    placeholder="телефон*"
-                    autoComplete="off"
-                    name="number"
-                    value={number}
-                    onChange={onChange}
-                    onFocus={onFocusInput}
-                  />
-                  {isNumberValid ? null : <small>минимум 10 знаков</small>}
-                </div>
-              </div>
-              <div className="exchange__comment">
-                <textarea
-                  placeholder="Комментарий"
-                  name="comment"
-                  rows={3}
-                  value={comment}
+          <form className="exchange__form" onSubmit={sendData}>
+            <div className="exchange__required">* - обязательные поля</div>
+            <div className="exchange__inputs">
+              <div className="exchange__form-group">
+                <input
+                  type="text"
+                  className={"exchange__input" + (isNameValid ? "" : " exchange__input_invalid")}
+                  placeholder="имя*"
+                  autoComplete="off"
+                  name="name"
+                  value={name}
                   onChange={onChange}
+                  onFocus={onFocusInput}
                 />
+                {isNameValid ? null : <small>надо как-то себя назвать</small>}
               </div>
-              <button type="submit" className="exchange__btn">
-                отправить
-              </button>
-            </form>
-          )}
+              <div className="exchange__form-group">
+                <input
+                  type="tel"
+                  className={"exchange__input" + (isNumberValid ? "" : " exchange__input_invalid")}
+                  placeholder="телефон*"
+                  autoComplete="off"
+                  name="number"
+                  value={number}
+                  onChange={onChange}
+                  onFocus={onFocusInput}
+                />
+                {isNumberValid ? null : <small>минимум 10 знаков</small>}
+              </div>
+            </div>
+            <div className="exchange__comment">
+              <textarea
+                placeholder="Комментарий"
+                name="comment"
+                rows={3}
+                value={comment}
+                onChange={onChange}
+              />
+            </div>
+            <button type="submit" className="exchange__btn">
+              отправить
+            </button>
+          </form>
           <p className="exchange__error">
             (если мы вам не перезваниваем, то, вероятно, вы ошиблись при указании номера. попробуйте
             еще раз)

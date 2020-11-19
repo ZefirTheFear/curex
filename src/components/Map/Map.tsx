@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { GoogleMap, useLoadScript, Marker, StreetViewPanorama } from "@react-google-maps/api";
-import { MdArrowBack } from "react-icons/md";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 import mapStyles from "./mapStyles";
 import markerIcon from "../../assets/mapMarker/marker.svg";
@@ -23,10 +23,10 @@ const Map: React.FC = () => {
   const mapOptions = useMemo(() => {
     return {
       // mapTypeId: "terrain",
-      zoom: 15,
+      zoom: 16,
       center: {
-        lat: 50.4428267,
-        lng: 30.4944428
+        lat: 50.4428904,
+        lng: 30.4953869
       },
       styles: mapStyles,
       fullscreenControl: false,
@@ -37,8 +37,8 @@ const Map: React.FC = () => {
 
   const mapContainerStyle = useMemo(() => {
     return {
-      height: "50vh",
-      width: "50vw"
+      height: "100%",
+      width: "100%"
     };
   }, []);
 
@@ -46,12 +46,12 @@ const Map: React.FC = () => {
     return {
       visible: true,
       position: {
-        lat: 50.4430161,
-        lng: 30.4951908
+        lat: 50.4430665,
+        lng: 30.4953152
       },
       pov: {
-        heading: 140,
-        pitch: 10
+        heading: 150,
+        pitch: 0
       },
       zoom: 1,
       addressControl: false,
@@ -111,7 +111,7 @@ const Map: React.FC = () => {
           <>
             <StreetViewPanorama options={panoramaOptions} />
             <div className="map__close-panorama" onClick={closePanorama} title="Вернуться к карте">
-              <MdArrowBack />
+              <IoMdArrowRoundBack />
             </div>
           </>
         ) : null}

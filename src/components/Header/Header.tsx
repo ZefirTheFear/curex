@@ -35,7 +35,7 @@ const Header: React.FC = () => {
     <header className="header">
       <div className="header__inner">
         <div className="header__logo" onClick={logoClick}>
-          <img src={logo} alt="logo" className="header__logo-img" />
+          <img src={logo} alt="logo" className="header__logo-img" draggable={false} />
         </div>
         <nav className="header__menu">
           {navItems.map((item) => (

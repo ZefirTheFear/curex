@@ -163,7 +163,8 @@ const mapStyles = [
     elementType: "labels.text.fill",
     stylers: [
       {
-        color: "#ffffff"
+        // color: "#ffffff"
+        color: "#444444"
       }
     ]
   },

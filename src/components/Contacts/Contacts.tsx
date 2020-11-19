@@ -32,30 +32,30 @@ const Contacts: React.FC = () => {
       {
         title: "address",
         icon: <FaMapMarkerAlt />,
-        desc: "Киев, Оболонский пр, 14"
+        desc: "Киев, ул. Симона Петлюры, 23"
       },
       {
         title: "phone",
         icon: <FaPhone />,
-        desc: "(093) 979-24-44",
-        link: "tel:+380939792444"
+        desc: "(012) 345-67-89",
+        link: "tel:+380123456789"
       },
       {
         title: "message",
         icon: <MdMessage />,
-        desc: "t.me/cryptotrade_exc",
-        onClick: () => clickUnit("https://t.me/cryptotrade_exc")
+        desc: "t.me/tele-message",
+        onClick: () => clickUnit("https://t.me/tele-message")
       },
       {
         title: "telegram",
         icon: <FaTelegramPlane />,
-        desc: "t.me/cryptotradekyiv",
-        onClick: () => clickUnit("https://t.me/cryptotradekyiv")
+        desc: "t.me/tele-channel",
+        onClick: () => clickUnit("https://t.me/tele-channel")
       },
       {
         title: "schedule",
         icon: <FaClock />,
-        desc: "Пн-Пт: 09-21, Сб-ВС: 10-20"
+        desc: "Пн-Пт: 09-21,\nСб-ВС: 10-20"
       }
     ];
   }, [clickUnit]);
@@ -71,7 +71,9 @@ const Contacts: React.FC = () => {
     <section className="contacts" ref={contactsSection}>
       <div className="contacts__inner">
         <div className="contacts__info">
-          <img src={logo} alt="logo" className="contacts__logo" />
+          <div className="contacts__logo">
+            <img src={logo} alt="logo" draggable={false} />
+          </div>
           <div>
             {contacts.map((item) => {
               if (item.title === "phone") {
