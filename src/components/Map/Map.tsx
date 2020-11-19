@@ -137,10 +137,10 @@ const Map: React.FC = () => {
   ]);
 
   if (loadError) {
-    return <div>Map cannot be loaded right now, sorry.</div>;
+    return <div className="map-feedback">Map cannot be loaded right now, sorry.</div>;
   }
 
-  return isLoaded ? renderMap() : <div>wait pls</div>;
+  return isLoaded ? renderMap() : <div className="map-feedback">wait pls</div>;
 };
 
 export default Map;

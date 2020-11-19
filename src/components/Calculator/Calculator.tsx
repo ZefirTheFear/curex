@@ -214,9 +214,13 @@ const Calculator: React.FC = () => {
     }
   }, [scrollToCalc]);
 
+  if (isFetchingBinanceData || isFetchingOwnData) {
+    return <Spinner />;
+  }
+
   return (
     <>
-      {(isFetchingBinanceData || isFetchingOwnData) && <Spinner />}
+      {/* {(isFetchingBinanceData || isFetchingOwnData) && <Spinner />} */}
       {isSomethingWentWrong && (
         <Modal
           Img={SWWImg}

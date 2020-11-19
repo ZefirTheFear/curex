@@ -76,16 +76,18 @@ const Exchange: React.FC = () => {
       }
 
       try {
-        // const response = await fetch(
-        //   `https://api.telegram.org/bot957327615:AAH0MITHU3soRisXfcZZmnHSgI9RqoqBTdo/sendMessage?chat_id=174294535&parse_mode=html&text=${encodeURI(
-        //     `<i>name:</i> <b>${name}</b>\n<i>number:</i> <b>${number}</b>\n<i>comment:</i> <b>${comment}</b>`
-        //   )}`
         const response = await fetch(
-          `https://api.telegram.org/bot957327615:AAH0MITHU3soRisXfcZZmnHSgI9RqoqBTdo/sendMessage?chat_id=448641137&parse_mode=html&text=${encodeURI(
+          `https://api.telegram.org/bot957327615:AAH0MITHU3soRisXfcZZmnHSgI9RqoqBTdo/sendMessage?chat_id=174294535&parse_mode=html&text=${encodeURI(
             `<i>имя:</i> <b>${name}</b>\n<i>номер:</i> <u><b>${number}</b></u>${
               comment.length > 0 ? `\n<i>комментарий:</i> <b>${comment}</b>` : ``
             }`
           )}`
+          // const response = await fetch(
+          //   `https://api.telegram.org/bot957327615:AAH0MITHU3soRisXfcZZmnHSgI9RqoqBTdo/sendMessage?chat_id=448641137&parse_mode=html&text=${encodeURI(
+          //     `<i>имя:</i> <b>${name}</b>\n<i>номер:</i> <u><b>${number}</b></u>${
+          //       comment.length > 0 ? `\n<i>комментарий:</i> <b>${comment}</b>` : ``
+          //     }`
+          //   )}`
         );
         if (response.status !== 200) {
           setIsLoading(false);

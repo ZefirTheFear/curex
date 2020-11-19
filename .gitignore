@@ -23,3 +23,9 @@ yarn-debug.log*
 yarn-error.log*
 
 todo.txt
+
+# firebase
+/functions
+/.firebase
+.firebaserc
+firebase.json

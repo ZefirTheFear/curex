@@ -12,7 +12,8 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  input {
+  input,
+  textarea {
     user-select: auto;
   }
 }
