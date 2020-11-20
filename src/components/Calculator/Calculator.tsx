@@ -25,6 +25,7 @@ import ImgXMR from "../../assets/currenciesLogo/XMR.png";
 import ImgTRX from "../../assets/currenciesLogo/TRX.png";
 import ImgDASH from "../../assets/currenciesLogo/DASH.png";
 import ImgUSD from "../../assets/currenciesLogo/USD.png";
+import ImgEUR from "../../assets/currenciesLogo/EUR.png";
 import ImgUAH from "../../assets/currenciesLogo/UAH.png";
 
 import "./Calculator.scss";
@@ -171,6 +172,7 @@ const Calculator: React.FC = () => {
       let resData: {
         cryptoPercentages: {};
         usd: { buy: { rate: number }; sell: { rate: number } };
+        eur: { buy: { rate: number }; sell: { rate: number } };
       } = await response.json();
       console.log(resData);
       const newCurrenciesToCustomer: Currency[] = [
@@ -179,6 +181,12 @@ const Calculator: React.FC = () => {
           valueSale: 1,
           valueBuy: 1,
           img: ImgUSD
+        },
+        {
+          name: "EUR",
+          valueSale: resData.eur.sell.rate / resData.usd.buy.rate,
+          valueBuy: resData.eur.buy.rate / resData.usd.sell.rate,
+          img: ImgEUR
         },
         {
           name: "UAH",

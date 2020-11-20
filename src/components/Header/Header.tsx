@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import logo from "../../assets/logo/logo.svg";
+// import logo from "../../assets/logo/logo-icon.svg";
+import { ReactComponent as Logo } from "../../assets/logo/logo-icon.svg";
 
 import navItemsFn from "../../utils/ts/navItems";
 
@@ -35,7 +36,7 @@ const Header: React.FC = () => {
     <header className="header">
       <div className="header__inner">
         <div className="header__logo" onClick={logoClick}>
-          <img src={logo} alt="logo" className="header__logo-img" draggable={false} />
+          <Logo />
         </div>
         <nav className="header__menu">
           {navItems.map((item) => (

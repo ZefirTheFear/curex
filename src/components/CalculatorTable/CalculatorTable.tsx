@@ -58,7 +58,12 @@ const CalculatorTable: React.FC = () => {
           </thead>
           <tbody>
             {currencies.map((currency) => {
-              if (currency.name !== "UAH" && currency.name !== "USD" && currency.name !== "USDT") {
+              if (
+                currency.name !== "UAH" &&
+                currency.name !== "USD" &&
+                currency.name !== "EUR" &&
+                currency.name !== "USDT"
+              ) {
                 return (
                   <tr key={currency.name}>
                     <td>{currency.name}</td>

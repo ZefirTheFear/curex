@@ -13,7 +13,7 @@ import { RootState } from "../../store/store";
 
 import { scrollToNode } from "../../utils/ts/helperFunctions";
 
-import logo from "../../assets/logo/logo.svg";
+import { ReactComponent as Logo } from "../../assets/logo/logo-icon.svg";
 
 import "./Contacts.scss";
 
@@ -37,8 +37,8 @@ const Contacts: React.FC = () => {
       {
         title: "phone",
         icon: <FaPhone />,
-        desc: "(012) 345-67-89",
-        link: "tel:+380123456789"
+        desc: "(063) 123-10-23",
+        link: "tel:+380631231023"
       },
       {
         title: "message",
@@ -72,7 +72,7 @@ const Contacts: React.FC = () => {
       <div className="contacts__inner">
         <div className="contacts__info">
           <div className="contacts__logo">
-            <img src={logo} alt="logo" draggable={false} />
+            <Logo />
           </div>
           <div>
             {contacts.map((item) => {
