@@ -1,10 +1,10 @@
 import { Currency } from "../../../models/currency";
-import * as currencyActionTypes from "./cryptoCurrencyActionTypes";
+import * as cryptoCurrencyActionTypes from "./cryptoCurrencyActionTypes";
 
 export const setCurrenciesFromCustomer = (
   currencies: Currency[]
-): currencyActionTypes.SetCurrenciesFromCustomer => ({
-  type: currencyActionTypes.SET_CURRECNCIES_FROM_CUSTOMER,
+): cryptoCurrencyActionTypes.SetCurrenciesFromCustomer => ({
+  type: cryptoCurrencyActionTypes.SET_CURRECNCIES_FROM_CUSTOMER,
   payload: {
     currencies
   }
@@ -12,8 +12,8 @@ export const setCurrenciesFromCustomer = (
 
 export const setCurrenciesToCustomer = (
   currencies: Currency[]
-): currencyActionTypes.SetCurrenciesToCustomer => ({
-  type: currencyActionTypes.SET_CURRECNCIES_TO_CUSTOMER,
+): cryptoCurrencyActionTypes.SetCurrenciesToCustomer => ({
+  type: cryptoCurrencyActionTypes.SET_CURRECNCIES_TO_CUSTOMER,
   payload: {
     currencies
   }
@@ -21,8 +21,8 @@ export const setCurrenciesToCustomer = (
 
 export const setCurrentCurrencyFromCustomer = (
   currency: Currency
-): currencyActionTypes.SetCurrentCurrencyFromCustomer => ({
-  type: currencyActionTypes.SET_CURRENT_CURRENCY_FROM_CUSTOMER,
+): cryptoCurrencyActionTypes.SetCurrentCurrencyFromCustomer => ({
+  type: cryptoCurrencyActionTypes.SET_CURRENT_CURRENCY_FROM_CUSTOMER,
   payload: {
     currency
   }
@@ -30,21 +30,21 @@ export const setCurrentCurrencyFromCustomer = (
 
 export const setCurrentCurrencyToCustomer = (
   currency: Currency
-): currencyActionTypes.SetCurrentCurrencyToCustomer => ({
-  type: currencyActionTypes.SET_CURRENT_CURRENCY_TO_CUSTOMER,
+): cryptoCurrencyActionTypes.SetCurrentCurrencyToCustomer => ({
+  type: cryptoCurrencyActionTypes.SET_CURRENT_CURRENCY_TO_CUSTOMER,
   payload: {
     currency
   }
 });
 
-export const swapCurrencies = (): currencyActionTypes.SwapCurrencies => ({
-  type: currencyActionTypes.SWAP_CURRENCIES
+export const swapCurrencies = (): cryptoCurrencyActionTypes.SwapCurrencies => ({
+  type: cryptoCurrencyActionTypes.SWAP_CURRENCIES
 });
 
 export const changeCurrencyFromCustomerAmount = (
   amount: string
-): currencyActionTypes.ChangeCurrencyFromCustomer => ({
-  type: currencyActionTypes.CHANGE_CURRENCY_FROM_CUSTOMER_AMOUNT,
+): cryptoCurrencyActionTypes.ChangeCurrencyFromCustomer => ({
+  type: cryptoCurrencyActionTypes.CHANGE_CURRENCY_FROM_CUSTOMER_AMOUNT,
   payload: {
     amount
   }
@@ -52,17 +52,17 @@ export const changeCurrencyFromCustomerAmount = (
 
 export const changeCurrencyToCustomerAmount = (
   amount: string
-): currencyActionTypes.ChangeCurrencyToCustomer => ({
-  type: currencyActionTypes.CHANGE_CURRENCY_TO_CUSTOMER_AMOUNT,
+): cryptoCurrencyActionTypes.ChangeCurrencyToCustomer => ({
+  type: cryptoCurrencyActionTypes.CHANGE_CURRENCY_TO_CUSTOMER_AMOUNT,
   payload: {
     amount
   }
 });
 
 export const setPercentages = (
-  percentages: currencyActionTypes.Percentage[]
-): currencyActionTypes.SetPercentages => ({
-  type: currencyActionTypes.SET_PERCANTAGES,
+  percentages: cryptoCurrencyActionTypes.Percentage[]
+): cryptoCurrencyActionTypes.SetPercentages => ({
+  type: cryptoCurrencyActionTypes.SET_PERCANTAGES,
   payload: {
     percentages
   }

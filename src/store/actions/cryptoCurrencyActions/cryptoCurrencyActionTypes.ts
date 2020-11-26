@@ -69,7 +69,7 @@ export interface SetPercentages {
   };
 }
 
-export type CurrencyActionType =
+export type CryptoCurrencyActionType =
   | SetCurrenciesFromCustomer
   | SetCurrenciesToCustomer
   | SetCurrentCurrencyFromCustomer

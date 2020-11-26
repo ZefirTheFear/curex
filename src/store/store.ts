@@ -1,5 +1,6 @@
 import { createStore, combineReducers } from "redux";
 
+import fiatCurrencyReducer from "./reducers/fiatCurrencyReducer";
 import cryptoCurrencyReducer from "./reducers/cryptoCurrencyReducer";
 import mobileMenuReducer from "./reducers/mobileMenuReducer";
 import scrollReducer from "./reducers/scrollReducer";
@@ -11,6 +12,7 @@ declare global {
 }
 
 const rootReducer = combineReducers({
+  fiatCurrenciesState: fiatCurrencyReducer,
   cryptoCurrenciesState: cryptoCurrencyReducer,
   mobileMenuState: mobileMenuReducer,
   scrollState: scrollReducer

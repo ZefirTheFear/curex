@@ -24,11 +24,12 @@ import ImgUAH from "../../assets/currenciesLogo/UAH.png";
 import { Currency } from "../../models/currency";
 
 import { RootState } from "../../store/store";
+import * as fiatCurrencyActions from "../../store/actions/fiatCurrenciesActions/fiatCurrenciesActionCreators";
 import * as cryptoCurrencyActions from "../../store/actions/cryptoCurrencyActions/cryptoCurrencyActionCreators";
 
 import "./Calculator.scss";
 
-type calculatorTypes = "foreign" | "crypto";
+type calculatorTypes = "fiat" | "crypto";
 
 const Calculator: React.FC = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const Calculator: React.FC = () => {
 
   const scrollToCalc = useSelector((state: RootState) => state.scrollState.scrollToCalc);
 
-  const [calculatorType, setCalculatorType] = useState<calculatorTypes>("foreign");
+  const [calculatorType, setCalculatorType] = useState<calculatorTypes>("fiat");
 
   const [isFetchingBinanceData, setIsFetchingBinanceData] = useState(true);
   const [isFetchingOwnData, setIsFetchingOwnData] = useState(true);
@@ -144,7 +145,7 @@ const Calculator: React.FC = () => {
         eur: { buy: { rate: number }; sell: { rate: number } };
       } = await response.json();
       console.log(resData);
-      const newCurrenciesToCustomer: Currency[] = [
+      const newCryptoCurrenciesToCustomer: Currency[] = [
         {
           name: "USD",
           valueSale: 1,
@@ -164,7 +165,56 @@ const Calculator: React.FC = () => {
           img: ImgUAH
         }
       ];
-      dispatch(cryptoCurrencyActions.setCurrenciesToCustomer(newCurrenciesToCustomer));
+
+      const newFiatCurrencies: Currency[] = [
+        {
+          name: "USD",
+          valueSale: resData.usd.sell.rate,
+          valueBuy: resData.usd.buy.rate,
+          img: ImgUSD
+        },
+        {
+          name: "EUR",
+          valueSale: resData.eur.sell.rate,
+          valueBuy: resData.eur.buy.rate,
+          img: ImgEUR
+        },
+        {
+          name: "UAH",
+          valueSale: 1,
+          valueBuy: 1,
+          img: ImgUAH
+        }
+      ];
+
+      dispatch(fiatCurrencyActions.setFiatCurrenciesFromCustomer(newFiatCurrencies));
+      dispatch(fiatCurrencyActions.setFiatCurrenciesToCustomer(newFiatCurrencies));
+      dispatch(
+        fiatCurrencyActions.setCurrentFiatCurrencyFromCustomer({
+          name: "USD",
+          valueSale: resData.usd.sell.rate,
+          valueBuy: resData.usd.buy.rate,
+          img: ImgUSD
+        })
+      );
+      dispatch(
+        fiatCurrencyActions.setCurrentFiatCurrencyToCustomer({
+          name: "UAH",
+          valueSale: 1,
+          valueBuy: 1,
+          img: ImgUAH
+        })
+      );
+
+      dispatch(cryptoCurrencyActions.setCurrenciesToCustomer(newCryptoCurrenciesToCustomer));
+      dispatch(
+        cryptoCurrencyActions.setCurrentCurrencyToCustomer({
+          name: "USD",
+          img: ImgUSD,
+          valueSale: 1,
+          valueBuy: 1
+        })
+      );
       dispatch(cryptoCurrencyActions.setPercentages(Object.values(resData.cryptoPercentages)));
       setIsFetchingOwnData(false);
     } catch (error) {
@@ -174,10 +224,10 @@ const Calculator: React.FC = () => {
 
   const toggleCalculatorType = useCallback(() => {
     setCalculatorType((prevState) => {
-      if (prevState === "foreign") {
+      if (prevState === "fiat") {
         return "crypto";
       } else {
-        return "foreign";
+        return "fiat";
       }
     });
   }, []);
@@ -214,7 +264,7 @@ const Calculator: React.FC = () => {
       <section className="calculator-section" ref={сalcSection}>
         <div className="calculator-section__inner">
           <div className="calculator-section__calculator">
-            {calculatorType === "foreign" ? <FiatCalculator /> : <CryptoCalculator />}
+            {calculatorType === "fiat" ? <FiatCalculator /> : <CryptoCalculator />}
           </div>
           <div className="calculator-section__btn-group">
             <button
@@ -222,7 +272,7 @@ const Calculator: React.FC = () => {
               type="button"
               onClick={toggleCalculatorType}
             >
-              перейти в {calculatorType === "foreign" ? "криптокалькулятор" : "фиатный калькулятор"}
+              перейти в {calculatorType === "fiat" ? "криптокалькулятор" : "фиатный калькулятор"}
             </button>
           </div>
         </div>

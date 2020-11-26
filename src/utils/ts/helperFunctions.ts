@@ -11,7 +11,25 @@ export const validateInput = (value: string) => {
   }
 };
 
-export const convertCurrency = (
+export const convertFiatCurrency = (
+  amount: string,
+  inputFieldCurrency: Currency,
+  outputFieldCurrency: Currency,
+  operationType: "BUY" | "SALE"
+) => {
+  if (amount === "") {
+    return "";
+  }
+  const totalValue =
+    +validateInput(amount) *
+    (operationType === "BUY" ? inputFieldCurrency.valueBuy : inputFieldCurrency.valueSale);
+  const outputCurrencyValue =
+    operationType === "BUY" ? outputFieldCurrency.valueSale : outputFieldCurrency.valueBuy;
+  const convertedValue = (totalValue / outputCurrencyValue).toFixed(4).toString();
+  return convertedValue;
+};
+
+export const convertCryptoCurrency = (
   amount: string,
   inputFieldCurrency: Currency,
   outputFieldCurrency: Currency,

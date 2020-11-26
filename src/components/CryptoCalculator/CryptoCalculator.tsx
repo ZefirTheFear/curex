@@ -33,6 +33,28 @@ const CryptoCalculator: React.FC = () => {
     (state: RootState) => state.cryptoCurrenciesState.currencyToCustomerAmount
   );
 
+  const changeCurrencyFromCustomer = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const currencyName = e.currentTarget.getAttribute("data-name")!;
+      const newSelectedCurrency = currenciesFromCustomer.find(
+        (currency) => currency.name === currencyName
+      )!;
+      dispatch(cryptoCurrencyActions.setCurrentCurrencyFromCustomer(newSelectedCurrency));
+    },
+    [currenciesFromCustomer, dispatch]
+  );
+
+  const changeCurrencyToCustomer = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const currencyName = e.currentTarget.getAttribute("data-name")!;
+      const newSelectedCurrency = currenciesToCustomer.find(
+        (currency) => currency.name === currencyName
+      )!;
+      dispatch(cryptoCurrencyActions.setCurrentCurrencyToCustomer(newSelectedCurrency));
+    },
+    [currenciesToCustomer, dispatch]
+  );
+
   const changeCurrencyFromCustomerAmount = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(cryptoCurrencyActions.changeCurrencyFromCustomerAmount(event.currentTarget.value));
@@ -63,22 +85,24 @@ const CryptoCalculator: React.FC = () => {
         </div>
         <div className="calculator">
           <ExchangeData
-            status="buy"
+            // status="buy"
             title="вы продаете"
             options={currenciesFromCustomer}
             currentCurrency={currentCurrencyFromCustomer}
             value={currencyFromCustomerAmount}
+            onChangeCurrency={changeCurrencyFromCustomer}
             onChangeInputAmount={changeCurrencyFromCustomerAmount}
           />
           <div className="calculator__swaper" onClick={swapCurrencies}>
             <TiArrowRepeat />
           </div>
           <ExchangeData
-            status="sale"
+            // status="sale"
             title="вы покупаете"
             options={currenciesToCustomer}
             currentCurrency={currentCurrencyToCustomer}
             value={currencyToCustomerAmount}
+            onChangeCurrency={changeCurrencyToCustomer}
             onChangeInputAmount={changeCurrencyToCustomerAmount}
           />
         </div>

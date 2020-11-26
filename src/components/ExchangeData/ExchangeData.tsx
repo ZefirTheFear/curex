@@ -1,38 +1,30 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 
 import { FaAngleDown } from "react-icons/fa";
 
 import { Currency } from "../../models/currency";
-import { RootState } from "../../store/store";
-import * as currencyActions from "../../store/actions/cryptoCurrencyActions/cryptoCurrencyActionCreators";
 
 import "./ExchangeData.scss";
 
 interface ExchangeDataProps {
-  status: "sale" | "buy";
   title: string;
   options: Currency[];
   currentCurrency: Currency;
   value: string;
+  onChangeCurrency: (e: React.MouseEvent<HTMLDivElement>) => void;
   onChangeInputAmount: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const ExchangeData: React.FC<ExchangeDataProps> = ({
-  status,
   title,
   options,
   currentCurrency,
   value,
+  onChangeCurrency,
   onChangeInputAmount
 }) => {
-  const dispatch = useDispatch();
-
-  const closeOptions = useSelector((state: RootState) => state.cryptoCurrenciesState.closeOptions);
-
   const optionsListElem = useRef<HTMLDivElement>(null!);
   const selectedElem = useRef<HTMLDivElement>(null!);
-  const isMount = useRef(false);
 
   const [isOpenedOptions, setIsOpenedOptions] = useState(false);
 
@@ -60,20 +52,6 @@ const ExchangeData: React.FC<ExchangeDataProps> = ({
     setIsOpenedOptions(false);
   }, []);
 
-  const selectCurrency = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      const currencyName = e.currentTarget.getAttribute("data-name")!;
-      const newSelectedCurrency = options.find((currency) => currency.name === currencyName)!;
-      if (status === "buy") {
-        dispatch(currencyActions.setCurrentCurrencyFromCustomer(newSelectedCurrency));
-      } else {
-        dispatch(currencyActions.setCurrentCurrencyToCustomer(newSelectedCurrency));
-      }
-      toggleIsOpenedOptions();
-    },
-    [dispatch, options, status, toggleIsOpenedOptions]
-  );
-
   const closeOpenedOptions = useCallback(
     (e: MouseEvent) => {
       let element = e.target as HTMLElement;
@@ -94,13 +72,6 @@ const ExchangeData: React.FC<ExchangeDataProps> = ({
     },
     [closeCurrenciesOptions, isOpenedOptions]
   );
-
-  useEffect(() => {
-    if (isMount.current) {
-      closeCurrenciesOptions();
-    }
-    isMount.current = true;
-  }, [closeOptions, closeCurrenciesOptions]);
 
   useEffect(() => {
     window.addEventListener("click", closeOpenedOptions);
@@ -135,7 +106,7 @@ const ExchangeData: React.FC<ExchangeDataProps> = ({
               className="exchange-data__select-options-item"
               key={item.name}
               data-name={item.name}
-              onClick={selectCurrency}
+              onClick={onChangeCurrency}
             >
               <img
                 className="exchange-data__currency-img"

@@ -1,23 +1,20 @@
 import cloneDeep from "clone-deep";
 
-import { convertCryptoCurrency, validateInput } from "../../utils/ts/helperFunctions";
+import { convertFiatCurrency, validateInput } from "../../utils/ts/helperFunctions";
 import { Currency } from "../../models/currency";
-import * as cryptoCurrencyActionTypes from "../actions/cryptoCurrencyActions/cryptoCurrencyActionTypes";
+import * as fiatCurrencyActionTypes from "../actions/fiatCurrenciesActions/fiatCurrenciesActionTypes";
 
 interface CurrencyState {
-  isBuyCrypto: boolean;
   currenciesFromCustomer: Currency[];
   currenciesToCustomer: Currency[];
   currentCurrencyFromCustomer: Currency;
   currentCurrencyToCustomer: Currency;
   currencyFromCustomerAmount: string;
   currencyToCustomerAmount: string;
-  percentages: cryptoCurrencyActionTypes.Percentage[];
   lastModifiedField: "FROM" | "TO";
 }
 
 const initialState: CurrencyState = {
-  isBuyCrypto: true,
   currenciesFromCustomer: [],
   currenciesToCustomer: [],
   currentCurrencyFromCustomer: {
@@ -34,31 +31,28 @@ const initialState: CurrencyState = {
   },
   currencyFromCustomerAmount: "",
   currencyToCustomerAmount: "",
-  percentages: [],
   lastModifiedField: "FROM"
 };
 
 const currencyReducer = (
   state = initialState,
-  action: cryptoCurrencyActionTypes.CryptoCurrencyActionType
+  action: fiatCurrencyActionTypes.FiatCurrencyActionType
 ): CurrencyState => {
   switch (action.type) {
-    case cryptoCurrencyActionTypes.SET_CURRECNCIES_FROM_CUSTOMER:
+    case fiatCurrencyActionTypes.SET_FIAT_CURRECNCIES_FROM_CUSTOMER:
       return { ...state, currenciesFromCustomer: action.payload.currencies };
 
-    case cryptoCurrencyActionTypes.SET_CURRECNCIES_TO_CUSTOMER:
+    case fiatCurrencyActionTypes.SET_FIAT_CURRECNCIES_TO_CUSTOMER:
       return { ...state, currenciesToCustomer: action.payload.currencies };
 
-    case cryptoCurrencyActionTypes.SET_CURRENT_CURRENCY_FROM_CUSTOMER:
+    case fiatCurrencyActionTypes.SET_CURRENT_FIAT_CURRENCY_FROM_CUSTOMER:
       const newCurrencyFromCustomer = action.payload.currency;
 
       if (state.lastModifiedField === "FROM") {
-        const newCurrencyToCustomerAmount = convertCryptoCurrency(
+        const newCurrencyToCustomerAmount = convertFiatCurrency(
           state.currencyFromCustomerAmount,
           newCurrencyFromCustomer,
           state.currentCurrencyToCustomer,
-          state.percentages,
-          state.isBuyCrypto,
           "BUY"
         );
         return {
@@ -67,12 +61,10 @@ const currencyReducer = (
           currencyToCustomerAmount: newCurrencyToCustomerAmount
         };
       } else {
-        const newCurrencyFromCustomerAmount = convertCryptoCurrency(
+        const newCurrencyFromCustomerAmount = convertFiatCurrency(
           state.currencyToCustomerAmount,
           state.currentCurrencyToCustomer,
           newCurrencyFromCustomer,
-          state.percentages,
-          state.isBuyCrypto,
           "SALE"
         );
         return {
@@ -82,16 +74,14 @@ const currencyReducer = (
         };
       }
 
-    case cryptoCurrencyActionTypes.SET_CURRENT_CURRENCY_TO_CUSTOMER:
+    case fiatCurrencyActionTypes.SET_CURRENT_FIAT_CURRENCY_TO_CUSTOMER:
       const newCurrencyToCustomer = action.payload.currency;
 
       if (state.lastModifiedField === "FROM") {
-        const newCurrencyToCustomerAmount = convertCryptoCurrency(
+        const newCurrencyToCustomerAmount = convertFiatCurrency(
           state.currencyFromCustomerAmount,
           state.currentCurrencyFromCustomer,
           newCurrencyToCustomer,
-          state.percentages,
-          state.isBuyCrypto,
           "BUY"
         );
         return {
@@ -100,12 +90,10 @@ const currencyReducer = (
           currencyToCustomerAmount: newCurrencyToCustomerAmount
         };
       } else {
-        const newCurrencyFromCustomerAmount = convertCryptoCurrency(
+        const newCurrencyFromCustomerAmount = convertFiatCurrency(
           state.currencyToCustomerAmount,
           newCurrencyToCustomer,
           state.currentCurrencyFromCustomer,
-          state.percentages,
-          state.isBuyCrypto,
           "SALE"
         );
         return {
@@ -115,7 +103,7 @@ const currencyReducer = (
         };
       }
 
-    case cryptoCurrencyActionTypes.SWAP_CURRENCIES:
+    case fiatCurrencyActionTypes.SWAP_FIAT_CURRENCIES:
       const cloneCurrenciesFromCustomer = cloneDeep(state.currenciesFromCustomer);
       const cloneCurrenciesToCustomer = cloneDeep(state.currenciesToCustomer);
       const cloneCurrentCurrencyFromCustomer = cloneDeep(state.currentCurrencyFromCustomer);
@@ -128,37 +116,30 @@ const currencyReducer = (
         currentCurrencyToCustomer: cloneCurrentCurrencyFromCustomer,
         currencyFromCustomerAmount:
           state.lastModifiedField === "FROM"
-            ? convertCryptoCurrency(
+            ? convertFiatCurrency(
                 state.currencyFromCustomerAmount,
                 state.currentCurrencyFromCustomer,
                 state.currentCurrencyToCustomer,
-                state.percentages,
-                !state.isBuyCrypto,
                 "SALE"
               )
             : state.currencyToCustomerAmount,
         currencyToCustomerAmount:
           state.lastModifiedField === "FROM"
             ? state.currencyFromCustomerAmount
-            : convertCryptoCurrency(
+            : convertFiatCurrency(
                 state.currencyToCustomerAmount,
                 state.currentCurrencyToCustomer,
                 state.currentCurrencyFromCustomer,
-                state.percentages,
-                !state.isBuyCrypto,
                 "BUY"
               ),
-        lastModifiedField: state.lastModifiedField === "FROM" ? "TO" : "FROM",
-        isBuyCrypto: !state.isBuyCrypto
+        lastModifiedField: state.lastModifiedField === "FROM" ? "TO" : "FROM"
       };
 
-    case cryptoCurrencyActionTypes.CHANGE_CURRENCY_FROM_CUSTOMER_AMOUNT: {
-      const newCurrencyToCustomerAmount = convertCryptoCurrency(
+    case fiatCurrencyActionTypes.CHANGE_FIAT_CURRENCY_FROM_CUSTOMER_AMOUNT: {
+      const newCurrencyToCustomerAmount = convertFiatCurrency(
         action.payload.amount,
         state.currentCurrencyFromCustomer,
         state.currentCurrencyToCustomer,
-        state.percentages,
-        state.isBuyCrypto,
         "BUY"
       );
 
@@ -170,13 +151,11 @@ const currencyReducer = (
       };
     }
 
-    case cryptoCurrencyActionTypes.CHANGE_CURRENCY_TO_CUSTOMER_AMOUNT: {
-      const newCurrencyFromCustomerAmount = convertCryptoCurrency(
+    case fiatCurrencyActionTypes.CHANGE_FIAT_CURRENCY_TO_CUSTOMER_AMOUNT: {
+      const newCurrencyFromCustomerAmount = convertFiatCurrency(
         action.payload.amount,
         state.currentCurrencyToCustomer,
         state.currentCurrencyFromCustomer,
-        state.percentages,
-        state.isBuyCrypto,
         "SALE"
       );
 
@@ -187,9 +166,6 @@ const currencyReducer = (
         lastModifiedField: "TO"
       };
     }
-
-    case cryptoCurrencyActionTypes.SET_PERCANTAGES:
-      return { ...state, percentages: action.payload.percentages };
 
     default:
       return state;
