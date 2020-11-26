@@ -1,5 +1,5 @@
 import { Currency } from "./../../models/currency";
-import { Percentage } from "./../../store/actions/currencyActions/currencyActionTypes";
+import { Percentage } from "../../store/actions/cryptoCurrencyActions/cryptoCurrencyActionTypes";
 
 import globalStyles from "../css/variables.module.scss";
 

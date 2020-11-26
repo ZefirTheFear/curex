@@ -5,7 +5,7 @@ import { FaAngleDown } from "react-icons/fa";
 
 import { Currency } from "../../models/currency";
 import { RootState } from "../../store/store";
-import * as currencyActions from "../../store/actions/currencyActions/currencyActionCreators";
+import * as currencyActions from "../../store/actions/cryptoCurrencyActions/cryptoCurrencyActionCreators";
 
 import "./ExchangeData.scss";
 
@@ -28,7 +28,7 @@ const ExchangeData: React.FC<ExchangeDataProps> = ({
 }) => {
   const dispatch = useDispatch();
 
-  const closeOptions = useSelector((state: RootState) => state.currenciesState.closeOptions);
+  const closeOptions = useSelector((state: RootState) => state.cryptoCurrenciesState.closeOptions);
 
   const optionsListElem = useRef<HTMLDivElement>(null!);
   const selectedElem = useRef<HTMLDivElement>(null!);

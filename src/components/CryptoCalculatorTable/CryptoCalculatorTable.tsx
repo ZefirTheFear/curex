@@ -4,15 +4,15 @@ import cloneDeep from "clone-deep";
 
 import { RootState } from "../../store/store";
 
-import "./CalculatorTable.scss";
+import "./CryptoCalculatorTable.scss";
 
 const CalculatorTable: React.FC = () => {
-  const percentages = useSelector((state: RootState) => state.currenciesState.percentages);
+  const percentages = useSelector((state: RootState) => state.cryptoCurrenciesState.percentages);
   const currenciesFrom = useSelector(
-    (state: RootState) => state.currenciesState.currenciesFromCustomer
+    (state: RootState) => state.cryptoCurrenciesState.currenciesFromCustomer
   );
   const currenciesTo = useSelector(
-    (state: RootState) => state.currenciesState.currenciesToCustomer
+    (state: RootState) => state.cryptoCurrenciesState.currenciesToCustomer
   );
 
   const currencies = useMemo(() => cloneDeep([...currenciesFrom, ...currenciesTo]), [
@@ -22,15 +22,7 @@ const CalculatorTable: React.FC = () => {
   // const currencies = cloneDeep([...currenciesFrom, ...currenciesTo]);
 
   const headerTableCurrencies = useMemo(() => {
-    return [
-      // `BTC: $${currencies.find((currency) => currency.name === "BTC")!.valueBuy}`,
-      // `ETH: $${currencies.find((currency) => currency.name === "ETH")!.valueBuy}`,
-      // `USD/UAH: ${(1 / currencies.find((currency) => currency.name === "UAH")!.valueBuy).toFixed(
-      //   2
-      // )}/${(1 / currencies.find((currency) => currency.name === "UAH")!.valueSale).toFixed(2)}`
-      "валюта",
-      "стоимость, $"
-    ];
+    return ["валюта", "стоимость, $"];
   }, []);
 
   const headerTablePercentages = useMemo(() => {

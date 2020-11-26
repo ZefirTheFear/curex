@@ -6,6 +6,7 @@ import MenuMobile from "./components/MenuMobile/MenuMobile";
 import Hero from "./components/Hero/Hero";
 import WhyUs from "./components/WhyUs/WhyUs";
 import Calculator from "./components/Calculator/Calculator";
+import CryptoCalculator from "./components/CryptoCalculator/CryptoCalculator";
 import Exchange from "./components/Exchange/Exchange";
 import Contacts from "./components/Contacts/Contacts";
 

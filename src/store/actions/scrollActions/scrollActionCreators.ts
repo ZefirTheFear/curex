@@ -8,8 +8,8 @@ export const scrollToExchange = (): scrollActionTypes.ScrollToExchange => ({
   type: scrollActionTypes.SCROLL_TO_EXCHANGE
 });
 
-export const scrollToAboutUs = (): scrollActionTypes.ScrollToAboutUs => ({
-  type: scrollActionTypes.SCROLL_TO_ABOUT_US
+export const scrollToWhyUs = (): scrollActionTypes.ScrollToWhyUs => ({
+  type: scrollActionTypes.SCROLL_TO_WHY_US
 });
 
 export const scrollToContacts = (): scrollActionTypes.ScrollToContacts => ({

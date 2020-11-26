@@ -15,7 +15,7 @@ const WhyUs: React.FC = () => {
   const whyUsSection = useRef<HTMLElement>(null!);
   const isMount = useRef(false);
 
-  const scrollToWhyUs = useSelector((state: RootState) => state.scrollState.scrollToAboutUs);
+  const scrollToWhyUs = useSelector((state: RootState) => state.scrollState.scrollToWhyUs);
 
   const cardsData = useMemo(() => {
     return [

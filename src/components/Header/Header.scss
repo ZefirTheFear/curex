@@ -24,13 +24,15 @@
   height: 70%;
   cursor: pointer;
 
+  @media (max-width: 992px) {
+    height: 45%;
+  }
   @media (max-width: 767px) {
     margin: 0;
   }
 
   svg {
-    height: 42px;
-    width: 42px;
+    height: 100%;
   }
 }
 
@@ -42,6 +44,9 @@
   font-size: 1.2rem;
   font-weight: bold;
 
+  @media (max-width: 992px) {
+    font-size: 1rem;
+  }
   @media (max-width: 767px) {
     display: none;
   }

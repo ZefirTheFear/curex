@@ -1,5 +1,5 @@
-import { Currency } from "./../../../models/currency";
-import * as currencyActionTypes from "./currencyActionTypes";
+import { Currency } from "../../../models/currency";
+import * as currencyActionTypes from "./cryptoCurrencyActionTypes";
 
 export const setCurrenciesFromCustomer = (
   currencies: Currency[]

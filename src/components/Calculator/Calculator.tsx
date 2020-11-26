@@ -1,18 +1,11 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import { TiArrowRepeat } from "react-icons/ti";
 
 import Spinner from "../Spinner/Spinner";
 import Modal from "../Modal/Modal";
 import { ReactComponent as SWWImg } from "../../assets/errorImgs/client-server-error.svg";
-import ExchangeData from "../ExchangeData/ExchangeData";
-import TableForCalc from "../CalculatorTable/CalculatorTable";
-
-import { Currency } from "../../models/currency";
-
-import { RootState } from "../../store/store";
-import * as currencyActions from "../../store/actions/currencyActions/currencyActionCreators";
+import FiatCalculator from "../FiatCalculator/FiatCalculator";
+import CryptoCalculator from "../CryptoCalculator/CryptoCalculator";
 
 import { scrollToNode } from "../../utils/ts/helperFunctions";
 
@@ -28,51 +21,27 @@ import ImgUSD from "../../assets/currenciesLogo/USD.png";
 import ImgEUR from "../../assets/currenciesLogo/EUR.png";
 import ImgUAH from "../../assets/currenciesLogo/UAH.png";
 
+import { Currency } from "../../models/currency";
+
+import { RootState } from "../../store/store";
+import * as cryptoCurrencyActions from "../../store/actions/cryptoCurrencyActions/cryptoCurrencyActionCreators";
+
 import "./Calculator.scss";
+
+type calculatorTypes = "foreign" | "crypto";
 
 const Calculator: React.FC = () => {
   const dispatch = useDispatch();
 
-  const calcSection = useRef<HTMLElement>(null!);
-
-  const currenciesFromCustomer = useSelector(
-    (state: RootState) => state.currenciesState.currenciesFromCustomer
-  );
-  const currenciesToCustomer = useSelector(
-    (state: RootState) => state.currenciesState.currenciesToCustomer
-  );
-  const currentCurrencyFromCustomer = useSelector(
-    (state: RootState) => state.currenciesState.currentCurrencyFromCustomer
-  );
-  const currentCurrencyToCustomer = useSelector(
-    (state: RootState) => state.currenciesState.currentCurrencyToCustomer
-  );
-  const currencyFromCustomerAmount = useSelector(
-    (state: RootState) => state.currenciesState.currencyFromCustomerAmount
-  );
-  const currencyToCustomerAmount = useSelector(
-    (state: RootState) => state.currenciesState.currencyToCustomerAmount
-  );
+  const сalcSection = useRef<HTMLElement>(null!);
 
   const scrollToCalc = useSelector((state: RootState) => state.scrollState.scrollToCalc);
+
+  const [calculatorType, setCalculatorType] = useState<calculatorTypes>("foreign");
 
   const [isFetchingBinanceData, setIsFetchingBinanceData] = useState(true);
   const [isFetchingOwnData, setIsFetchingOwnData] = useState(true);
   const [isSomethingWentWrong, setIsSomethingWentWrong] = useState(false);
-
-  const changeCurrencyFromCustomerAmount = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(currencyActions.changeCurrencyFromCustomerAmount(event.currentTarget.value));
-    },
-    [dispatch]
-  );
-
-  const changeCurrencyToCustomerAmount = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(currencyActions.changeCurrencyToCustomerAmount(event.currentTarget.value));
-    },
-    [dispatch]
-  );
 
   const fetchBinanceData = useCallback(async () => {
     try {
@@ -146,9 +115,9 @@ const Calculator: React.FC = () => {
           img: ImgDASH
         }
       ];
-      dispatch(currencyActions.setCurrenciesFromCustomer(newCurrenciesFromCustomer));
+      dispatch(cryptoCurrencyActions.setCurrenciesFromCustomer(newCurrenciesFromCustomer));
       dispatch(
-        currencyActions.setCurrentCurrencyFromCustomer({
+        cryptoCurrencyActions.setCurrentCurrencyFromCustomer({
           name: "BTC",
           img: ImgBTC,
           valueSale: resData.symbols.BTCUSDT.bid,
@@ -195,17 +164,23 @@ const Calculator: React.FC = () => {
           img: ImgUAH
         }
       ];
-      dispatch(currencyActions.setCurrenciesToCustomer(newCurrenciesToCustomer));
-      dispatch(currencyActions.setPercentages(Object.values(resData.cryptoPercentages)));
+      dispatch(cryptoCurrencyActions.setCurrenciesToCustomer(newCurrenciesToCustomer));
+      dispatch(cryptoCurrencyActions.setPercentages(Object.values(resData.cryptoPercentages)));
       setIsFetchingOwnData(false);
     } catch (error) {
       return setIsSomethingWentWrong(true);
     }
   }, [dispatch]);
 
-  const swapCurrencies = useCallback(() => {
-    dispatch(currencyActions.swapCurrencies());
-  }, [dispatch]);
+  const toggleCalculatorType = useCallback(() => {
+    setCalculatorType((prevState) => {
+      if (prevState === "foreign") {
+        return "crypto";
+      } else {
+        return "foreign";
+      }
+    });
+  }, []);
 
   const closeSWWModal = useCallback(() => {
     setIsSomethingWentWrong(false);
@@ -217,8 +192,8 @@ const Calculator: React.FC = () => {
   }, [fetchBinanceData, fetchOwnData]);
 
   useEffect(() => {
-    if (calcSection.current) {
-      scrollToNode(calcSection.current);
+    if (сalcSection.current) {
+      scrollToNode(сalcSection.current);
     }
   }, [scrollToCalc]);
 
@@ -236,38 +211,20 @@ const Calculator: React.FC = () => {
           msg={"что-то пошло не так. попробуйте еще раз"}
         />
       )}
-      <section className="calculator-section" ref={calcSection}>
+      <section className="calculator-section" ref={сalcSection}>
         <div className="calculator-section__inner">
-          <div className="calculator__desc">
-            <p>
-              Воспользуйтесь нашим калькулятором для предварительного расчета результата операции.
-              Из-за высокой волатильности рынка мы не можем фиксировать котировки той или иной
-              валюты. Окончательная стоимость берется с биржи непосредственно в момент проведения
-              операции.
-            </p>
+          <div className="calculator-section__calculator">
+            {calculatorType === "foreign" ? <FiatCalculator /> : <CryptoCalculator />}
           </div>
-          <div className="calculator">
-            <ExchangeData
-              status="buy"
-              title="вы продаете"
-              options={currenciesFromCustomer}
-              currentCurrency={currentCurrencyFromCustomer}
-              value={currencyFromCustomerAmount}
-              onChangeInputAmount={changeCurrencyFromCustomerAmount}
-            />
-            <div className="calculator__swaper" onClick={swapCurrencies}>
-              <TiArrowRepeat />
-            </div>
-            <ExchangeData
-              status="sale"
-              title="вы покупаете"
-              options={currenciesToCustomer}
-              currentCurrency={currentCurrencyToCustomer}
-              value={currencyToCustomerAmount}
-              onChangeInputAmount={changeCurrencyToCustomerAmount}
-            />
+          <div className="calculator-section__btn-group">
+            <button
+              className="calculator-section__toggle-type-btn"
+              type="button"
+              onClick={toggleCalculatorType}
+            >
+              перейти в {calculatorType === "foreign" ? "криптокалькулятор" : "фиатный калькулятор"}
+            </button>
           </div>
-          {!(isFetchingBinanceData || isFetchingOwnData) && <TableForCalc />}
         </div>
       </section>
     </>

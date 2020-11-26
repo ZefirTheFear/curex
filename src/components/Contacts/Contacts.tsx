@@ -13,7 +13,7 @@ import { RootState } from "../../store/store";
 
 import { scrollToNode } from "../../utils/ts/helperFunctions";
 
-import { ReactComponent as Logo } from "../../assets/logo/logo-icon.svg";
+import { ReactComponent as Logo } from "../../assets/logo/logo-full.svg";
 
 import "./Contacts.scss";
 
@@ -38,27 +38,28 @@ const Contacts: React.FC = () => {
         title: "phone",
         icon: <FaPhone />,
         desc: "(063) 123-10-23",
-        link: "tel:+380631231023"
+        link: "tel:+380631231023",
+        onClick: () => null
       },
-      {
-        title: "message",
-        icon: <MdMessage />,
-        desc: "t.me/tele-message",
-        onClick: () => clickUnit("https://t.me/tele-message")
-      },
-      {
-        title: "telegram",
-        icon: <FaTelegramPlane />,
-        desc: "t.me/tele-channel",
-        onClick: () => clickUnit("https://t.me/tele-channel")
-      },
+      // {
+      //   title: "message",
+      //   icon: <MdMessage />,
+      //   desc: "t.me/tele-message",
+      //   onClick: () => clickUnit("https://t.me/tele-message")
+      // },
+      // {
+      //   title: "telegram",
+      //   icon: <FaTelegramPlane />,
+      //   desc: "t.me/tele-channel",
+      //   onClick: () => clickUnit("https://t.me/tele-channel")
+      // },
       {
         title: "schedule",
         icon: <FaClock />,
-        desc: "Пн-Пт: 09-21,\nСб-ВС: 10-20"
+        desc: "Пн-Пт: 09-21, Сб-ВС: 10-20"
       }
     ];
-  }, [clickUnit]);
+  }, []);
 
   useEffect(() => {
     if (isMount.current && contactsSection.current) {

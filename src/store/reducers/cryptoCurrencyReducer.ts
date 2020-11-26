@@ -1,8 +1,8 @@
 import cloneDeep from "clone-deep";
 
-import { convertCurrency, validateInput } from "./../../utils/ts/helperFunctions";
-import { Currency } from "./../../models/currency";
-import * as currencyActionTypes from "../actions/currencyActions/currencyActionTypes";
+import { convertCurrency, validateInput } from "../../utils/ts/helperFunctions";
+import { Currency } from "../../models/currency";
+import * as currencyActionTypes from "../actions/cryptoCurrencyActions/cryptoCurrencyActionTypes";
 
 import ImgBTC from "../../assets/currenciesLogo/BTC.png";
 import ImgUSD from "../../assets/currenciesLogo/USD.png";

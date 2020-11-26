@@ -1,8 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-// import logo from "../../assets/logo/logo-icon.svg";
-import { ReactComponent as Logo } from "../../assets/logo/logo-icon.svg";
+import { ReactComponent as Logo } from "../../assets/logo/logo-full.svg";
 
 import navItemsFn from "../../utils/ts/navItems";
 

@@ -13,7 +13,7 @@ const navItems = (dispatch: Dispatch) => [
   {
     title: "почему мы",
     onClick: () => {
-      onClick(scrollActions.scrollToAboutUs(), dispatch);
+      onClick(scrollActions.scrollToWhyUs(), dispatch);
     }
   },
   {

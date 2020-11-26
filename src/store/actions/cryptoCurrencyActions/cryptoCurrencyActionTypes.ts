@@ -1,4 +1,4 @@
-import { Currency } from "./../../../models/currency";
+import { Currency } from "../../../models/currency";
 
 export const SET_CURRECNCIES_FROM_CUSTOMER = "SET_CURRECNCIES_FROM_CUSTOMER";
 export const SET_CURRECNCIES_TO_CUSTOMER = "SET_CURRECNCIES_TO_CUSTOMER";

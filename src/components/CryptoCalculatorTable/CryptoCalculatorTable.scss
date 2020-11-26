@@ -15,15 +15,16 @@
 .calculator-tables__table {
   // border: 1px solid $app-grey-color;
   border-radius: $border-radius;
-  overflow: hidden;
+  // overflow: hidden;
 
   &:first-child {
     margin-right: 1rem;
-    margin-bottom: 1rem;
   }
 
   @media (max-width: 992px) {
     min-width: 50%;
+    margin-right: 0;
+    margin-bottom: 1rem;
   }
 
   table {
