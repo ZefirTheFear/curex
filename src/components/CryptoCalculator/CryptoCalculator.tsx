@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { TiArrowRepeat } from "react-icons/ti";
 
 import ExchangeData from "../ExchangeData/ExchangeData";
-import TableForCryptoCalc from "../CryptoCalculatorTable/CryptoCalculatorTable";
+import TableForCryptoCalc from "../TableCryptoCalculator/TableCryptoCalculator";
 
 import { RootState } from "../../store/store";
 import * as cryptoCurrencyActions from "../../store/actions/cryptoCurrencyActions/cryptoCurrencyActionCreators";
@@ -85,7 +85,6 @@ const CryptoCalculator: React.FC = () => {
         </div>
         <div className="calculator">
           <ExchangeData
-            // status="buy"
             title="вы продаете"
             options={currenciesFromCustomer}
             currentCurrency={currentCurrencyFromCustomer}
@@ -97,7 +96,6 @@ const CryptoCalculator: React.FC = () => {
             <TiArrowRepeat />
           </div>
           <ExchangeData
-            // status="sale"
             title="вы покупаете"
             options={currenciesToCustomer}
             currentCurrency={currentCurrencyToCustomer}

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { TiArrowRepeat } from "react-icons/ti";
 
 import ExchangeData from "../ExchangeData/ExchangeData";
+import TableFiatCalculator from "../TableFiatCalculator/TableFiatCalculator";
 
 import { RootState } from "../../store/store";
 import * as fiatCurrencyActions from "../../store/actions/fiatCurrenciesActions/fiatCurrenciesActionCreators";
@@ -59,7 +60,6 @@ const FiatCalculator: React.FC = () => {
   const changeCurrencyFromCustomerAmount = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(fiatCurrencyActions.changeFiatCurrencyFromCustomerAmount(event.currentTarget.value));
-      // console.log("in progress");
     },
     [dispatch]
   );
@@ -67,14 +67,12 @@ const FiatCalculator: React.FC = () => {
   const changeCurrencyToCustomerAmount = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       dispatch(fiatCurrencyActions.changeFiatCurrencyToCustomerAmount(event.currentTarget.value));
-      // console.log("in progress");
     },
     [dispatch]
   );
 
   const swapCurrencies = useCallback(() => {
     dispatch(fiatCurrencyActions.swapFiatCurrencies());
-    // console.log("in progress");
   }, [dispatch]);
 
   return (
@@ -82,8 +80,8 @@ const FiatCalculator: React.FC = () => {
       <div className="crypto-calculator">
         <div className="crypto-calculator__desc">
           <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti, obcaecati porro
-            labore blanditiis autem libero tempora eligendi fuga unde nesciunt?
+            Воспользуйтесь нашим калькулятором для предварительного расчета результата операции.
+            Если у вас значительная сумма, то мы обменяем по индивидуальным условиям.
           </p>
         </div>
         <div className="calculator">
@@ -107,7 +105,7 @@ const FiatCalculator: React.FC = () => {
             onChangeInputAmount={changeCurrencyToCustomerAmount}
           />
         </div>
-        {/* <TableForCryptoCalc /> */}
+        <TableFiatCalculator />
       </div>
     </>
   );

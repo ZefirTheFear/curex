@@ -59,6 +59,17 @@
 
   td {
     padding: 0.5rem;
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    img {
+      height: 1rem;
+      margin-right: 0.5rem;
+    }
   }
 
   td,

@@ -21,6 +21,15 @@ import ImgUSD from "../../assets/currenciesLogo/USD.png";
 import ImgEUR from "../../assets/currenciesLogo/EUR.png";
 import ImgUAH from "../../assets/currenciesLogo/UAH.png";
 
+import flagUA from "../../assets/flags/ua-flag.png";
+import flagUSA from "../../assets/flags/usa-flag.png";
+import flagEU from "../../assets/flags/eu-flag.png";
+import flagRUS from "../../assets/flags/rus-flag.png";
+import flagPOL from "../../assets/flags/pol-flag.png";
+import flagUK from "../../assets/flags/uk-flag.png";
+import flagSwiss from "../../assets/flags/swiss-flag.png";
+import flagCAN from "../../assets/flags/can-flag.png";
+
 import { Currency } from "../../models/currency";
 
 import { RootState } from "../../store/store";
@@ -143,6 +152,11 @@ const Calculator: React.FC = () => {
         cryptoPercentages: {};
         usd: { buy: { rate: number }; sell: { rate: number } };
         eur: { buy: { rate: number }; sell: { rate: number } };
+        rub: { buy: { rate: number }; sell: { rate: number } };
+        pln: { buy: { rate: number }; sell: { rate: number } };
+        gbp: { buy: { rate: number }; sell: { rate: number } };
+        chf: { buy: { rate: number }; sell: { rate: number } };
+        cad: { buy: { rate: number }; sell: { rate: number } };
       } = await response.json();
       console.log(resData);
       const newCryptoCurrenciesToCustomer: Currency[] = [
@@ -168,22 +182,52 @@ const Calculator: React.FC = () => {
 
       const newFiatCurrencies: Currency[] = [
         {
+          name: "UAH",
+          valueSale: 1,
+          valueBuy: 1,
+          img: flagUA
+        },
+        {
           name: "USD",
           valueSale: resData.usd.sell.rate,
           valueBuy: resData.usd.buy.rate,
-          img: ImgUSD
+          img: flagUSA
         },
         {
           name: "EUR",
           valueSale: resData.eur.sell.rate,
           valueBuy: resData.eur.buy.rate,
-          img: ImgEUR
+          img: flagEU
         },
         {
-          name: "UAH",
-          valueSale: 1,
-          valueBuy: 1,
-          img: ImgUAH
+          name: "RUB",
+          valueSale: resData.rub.sell.rate,
+          valueBuy: resData.rub.buy.rate,
+          img: flagRUS
+        },
+        {
+          name: "PLN",
+          valueSale: resData.pln.sell.rate,
+          valueBuy: resData.pln.buy.rate,
+          img: flagPOL
+        },
+        {
+          name: "GBP",
+          valueSale: resData.gbp.sell.rate,
+          valueBuy: resData.gbp.buy.rate,
+          img: flagUK
+        },
+        {
+          name: "CHF",
+          valueSale: resData.chf.sell.rate,
+          valueBuy: resData.chf.buy.rate,
+          img: flagSwiss
+        },
+        {
+          name: "CAD",
+          valueSale: resData.cad.sell.rate,
+          valueBuy: resData.cad.buy.rate,
+          img: flagCAN
         }
       ];
 
@@ -194,7 +238,7 @@ const Calculator: React.FC = () => {
           name: "USD",
           valueSale: resData.usd.sell.rate,
           valueBuy: resData.usd.buy.rate,
-          img: ImgUSD
+          img: flagUSA
         })
       );
       dispatch(
@@ -202,7 +246,7 @@ const Calculator: React.FC = () => {
           name: "UAH",
           valueSale: 1,
           valueBuy: 1,
-          img: ImgUAH
+          img: flagUA
         })
       );
 

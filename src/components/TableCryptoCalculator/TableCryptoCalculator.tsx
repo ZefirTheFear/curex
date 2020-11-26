@@ -4,7 +4,7 @@ import cloneDeep from "clone-deep";
 
 import { RootState } from "../../store/store";
 
-import "./CryptoCalculatorTable.scss";
+import "./TableCryptoCalculator.scss";
 
 const CalculatorTable: React.FC = () => {
   const percentages = useSelector((state: RootState) => state.cryptoCurrenciesState.percentages);
@@ -58,7 +58,12 @@ const CalculatorTable: React.FC = () => {
               ) {
                 return (
                   <tr key={currency.name}>
-                    <td>{currency.name}</td>
+                    <td>
+                      <div>
+                        <img src={currency.img} alt={currency.name + "-logo"} />
+                        {currency.name}
+                      </div>
+                    </td>
                     <td>{currency.valueBuy}</td>
                   </tr>
                 );
@@ -66,13 +71,6 @@ const CalculatorTable: React.FC = () => {
                 return null;
               }
             })}
-            {/* <tr>
-            <td>UAH</td>
-            <td>
-              {(1 / currencies.find((currency) => currency.name === "UAH")!.valueBuy).toFixed(2)}/
-              {(1 / currencies.find((currency) => currency.name === "UAH")!.valueSale).toFixed(2)}
-            </td>
-          </tr> */}
           </tbody>
         </table>
       </div>
