@@ -20,11 +20,24 @@ export const convertFiatCurrency = (
   if (amount === "") {
     return "";
   }
-  const totalValue =
+  let totalValue =
     +validateInput(amount) *
     (operationType === "BUY" ? inputFieldCurrency.valueBuy : inputFieldCurrency.valueSale);
-  const outputCurrencyValue =
-    operationType === "BUY" ? outputFieldCurrency.valueSale : outputFieldCurrency.valueBuy;
+  let outputCurrencyValue: number;
+  if (totalValue < 40000) {
+    totalValue =
+      +validateInput(amount) *
+      (operationType === "BUY"
+        ? inputFieldCurrency.valueBuyRoz!
+        : inputFieldCurrency.valueSaleRoz!);
+    outputCurrencyValue =
+      operationType === "BUY"
+        ? outputFieldCurrency.valueSaleRoz!
+        : outputFieldCurrency.valueBuyRoz!;
+  } else {
+    outputCurrencyValue =
+      operationType === "BUY" ? outputFieldCurrency.valueSale : outputFieldCurrency.valueBuy;
+  }
   const convertedValue = (totalValue / outputCurrencyValue).toFixed(4).toString();
   return convertedValue;
 };

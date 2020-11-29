@@ -18,5 +18,7 @@ export interface Currency {
     | "UAH";
   valueBuy: number;
   valueSale: number;
+  valueBuyRoz?: number;
+  valueSaleRoz?: number;
   img: string;
 }

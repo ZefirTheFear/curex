@@ -15,14 +15,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc((100vh - #{$header-height}) / 4);
+  height: calc((100vh - #{$header-height}) / 5);
   background: $app-black-color;
   color: $main-app-color;
   font-size: 1.2rem;
   text-transform: uppercase;
   border-bottom: 3px solid $main-app-color;
   cursor: pointer;
-  transition: $main-transition;
+  // transition: $main-transition;
+  transition-property: transform, height;
+  transition-duration: 0.15s, 0.15s;
 
   @mixin hover {
     color: $app-grey-color;
@@ -41,8 +43,9 @@
   transform: translate(100%, 0);
 }
 
-@for $x from 1 through 4 {
+@for $x from 1 through 5 {
   .menu-mobile__item:nth-child(#{$x}) {
-    transition-delay: $x * 0.1s;
+    // transition-delay: $x * 0.1s;
+    transition-delay: $x * 0.1s, 0s;
   }
 }

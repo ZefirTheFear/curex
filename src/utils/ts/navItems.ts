@@ -16,14 +16,26 @@ const navItems = (dispatch: Dispatch) => [
       onClick(scrollActions.scrollToWhyUs(), dispatch);
     }
   },
+  // {
+  //   title: "калькулятор",
+  //   onClick: () => {
+  //     onClick(scrollActions.scrollToCalc(), dispatch);
+  //   }
+  // },
   {
-    title: "калькулятор",
+    title: "обмен вылют",
     onClick: () => {
-      onClick(scrollActions.scrollToCalc(), dispatch);
+      onClick(scrollActions.scrollToFiatCalc(), dispatch);
     }
   },
   {
-    title: "обменять",
+    title: "криптовалюты",
+    onClick: () => {
+      onClick(scrollActions.scrollToCryptoCalc(), dispatch);
+    }
+  },
+  {
+    title: "создать заявку",
     onClick: () => {
       onClick(scrollActions.scrollToExchange(), dispatch);
     }

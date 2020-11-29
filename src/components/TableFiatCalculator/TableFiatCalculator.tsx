@@ -17,6 +17,7 @@ const CalculatorTable: React.FC = () => {
   return (
     <div className="calculator-tables">
       <div className="calculator-tables__table">
+        <h6>Оптовые курсы</h6>
         <table>
           <thead>
             <tr>
@@ -47,33 +48,38 @@ const CalculatorTable: React.FC = () => {
           </tbody>
         </table>
       </div>
-      {/* <div className="calculator-tables__table">
+      <div className="calculator-tables__table">
+        <h6>Розничные курсы</h6>
         <table>
           <thead>
             <tr>
-              {headerTablePercentages.map((item) => (
+              {headerTableCurrencies.map((item) => (
                 <th key={item}>{item}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {percentages.map((percentage) => (
-              <tr key={percentage.amountFrom}>
-                <td>
-                  {percentage.amountFrom} - {percentage.amountTo}
-                </td>
-                <td>{formatValue(percentage.percentBuyCrypto)}</td>
-                <td>{formatValue(percentage.percentSaleCrypto)}</td>
-              </tr>
-            ))}
-            <tr>
-              <td colSpan={3}>
-                от ${percentages[percentages.length - 1].amountTo + 1} индивидуальные условия
-              </td>
-            </tr>
+            {currencies.map((currency) => {
+              if (currency.name !== "UAH") {
+                return (
+                  <tr key={currency.name}>
+                    <td>
+                      <div>
+                        <img src={currency.img} alt={currency.name + "-logo"} />
+                        {currency.name}
+                      </div>
+                    </td>
+                    <td>{currency.valueBuyRoz}</td>
+                    <td>{currency.valueSaleRoz}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })}
           </tbody>
         </table>
-      </div> */}
+      </div>
     </div>
   );
 };

@@ -45,7 +45,10 @@ const Calculator: React.FC = () => {
 
   const сalcSection = useRef<HTMLElement>(null!);
 
-  const scrollToCalc = useSelector((state: RootState) => state.scrollState.scrollToCalc);
+  const scrollToFiatCalc = useSelector((state: RootState) => state.scrollState.scrollToFiatCalc);
+  const scrollToCryptoCalc = useSelector(
+    (state: RootState) => state.scrollState.scrollToCryptoCalc
+  );
 
   const [calculatorType, setCalculatorType] = useState<calculatorTypes>("fiat");
 
@@ -150,13 +153,26 @@ const Calculator: React.FC = () => {
       }
       let resData: {
         cryptoPercentages: {};
-        usd: { buy: { rate: number }; sell: { rate: number } };
-        eur: { buy: { rate: number }; sell: { rate: number } };
-        rub: { buy: { rate: number }; sell: { rate: number } };
-        pln: { buy: { rate: number }; sell: { rate: number } };
-        gbp: { buy: { rate: number }; sell: { rate: number } };
-        chf: { buy: { rate: number }; sell: { rate: number } };
-        cad: { buy: { rate: number }; sell: { rate: number } };
+        rates: {
+          opt: {
+            usd: { buy: number; sell: number };
+            eur: { buy: number; sell: number };
+            rub: { buy: number; sell: number };
+            pln: { buy: number; sell: number };
+            gbp: { buy: number; sell: number };
+            chf: { buy: number; sell: number };
+            cad: { buy: number; sell: number };
+          };
+          roz: {
+            usd: { buy: number; sell: number };
+            eur: { buy: number; sell: number };
+            rub: { buy: number; sell: number };
+            pln: { buy: number; sell: number };
+            gbp: { buy: number; sell: number };
+            chf: { buy: number; sell: number };
+            cad: { buy: number; sell: number };
+          };
+        };
       } = await response.json();
       console.log(resData);
       const newCryptoCurrenciesToCustomer: Currency[] = [
@@ -168,14 +184,14 @@ const Calculator: React.FC = () => {
         },
         {
           name: "EUR",
-          valueSale: resData.eur.sell.rate / resData.usd.buy.rate,
-          valueBuy: resData.eur.buy.rate / resData.usd.sell.rate,
+          valueSale: resData.rates.opt.eur.sell / resData.rates.opt.usd.buy,
+          valueBuy: resData.rates.opt.eur.buy / resData.rates.opt.usd.sell,
           img: ImgEUR
         },
         {
           name: "UAH",
-          valueSale: 1 / resData.usd.buy.rate,
-          valueBuy: 1 / resData.usd.sell.rate,
+          valueSale: 1 / resData.rates.opt.usd.buy,
+          valueBuy: 1 / resData.rates.opt.usd.sell,
           img: ImgUAH
         }
       ];
@@ -185,48 +201,64 @@ const Calculator: React.FC = () => {
           name: "UAH",
           valueSale: 1,
           valueBuy: 1,
+          valueSaleRoz: 1,
+          valueBuyRoz: 1,
           img: flagUA
         },
         {
           name: "USD",
-          valueSale: resData.usd.sell.rate,
-          valueBuy: resData.usd.buy.rate,
+          valueSale: resData.rates.opt.usd.sell,
+          valueBuy: resData.rates.opt.usd.buy,
+          valueSaleRoz: resData.rates.roz.usd.sell,
+          valueBuyRoz: resData.rates.roz.usd.buy,
           img: flagUSA
         },
         {
           name: "EUR",
-          valueSale: resData.eur.sell.rate,
-          valueBuy: resData.eur.buy.rate,
+          valueSale: resData.rates.opt.eur.sell,
+          valueBuy: resData.rates.opt.eur.buy,
+          valueSaleRoz: resData.rates.roz.eur.sell,
+          valueBuyRoz: resData.rates.roz.eur.buy,
           img: flagEU
         },
         {
           name: "RUB",
-          valueSale: resData.rub.sell.rate,
-          valueBuy: resData.rub.buy.rate,
+          valueSale: resData.rates.opt.rub.sell,
+          valueBuy: resData.rates.opt.rub.buy,
+          valueSaleRoz: resData.rates.roz.rub.sell,
+          valueBuyRoz: resData.rates.roz.rub.buy,
           img: flagRUS
         },
         {
           name: "PLN",
-          valueSale: resData.pln.sell.rate,
-          valueBuy: resData.pln.buy.rate,
+          valueSale: resData.rates.opt.pln.sell,
+          valueBuy: resData.rates.opt.pln.buy,
+          valueSaleRoz: resData.rates.roz.pln.sell,
+          valueBuyRoz: resData.rates.roz.pln.buy,
           img: flagPOL
         },
         {
           name: "GBP",
-          valueSale: resData.gbp.sell.rate,
-          valueBuy: resData.gbp.buy.rate,
+          valueSale: resData.rates.opt.gbp.sell,
+          valueBuy: resData.rates.opt.gbp.buy,
+          valueSaleRoz: resData.rates.roz.gbp.sell,
+          valueBuyRoz: resData.rates.roz.gbp.buy,
           img: flagUK
         },
         {
           name: "CHF",
-          valueSale: resData.chf.sell.rate,
-          valueBuy: resData.chf.buy.rate,
+          valueSale: resData.rates.opt.chf.sell,
+          valueBuy: resData.rates.opt.chf.buy,
+          valueSaleRoz: resData.rates.roz.chf.sell,
+          valueBuyRoz: resData.rates.roz.chf.buy,
           img: flagSwiss
         },
         {
           name: "CAD",
-          valueSale: resData.cad.sell.rate,
-          valueBuy: resData.cad.buy.rate,
+          valueSale: resData.rates.opt.cad.sell,
+          valueBuy: resData.rates.opt.cad.buy,
+          valueSaleRoz: resData.rates.roz.cad.sell,
+          valueBuyRoz: resData.rates.roz.cad.buy,
           img: flagCAN
         }
       ];
@@ -236,8 +268,10 @@ const Calculator: React.FC = () => {
       dispatch(
         fiatCurrencyActions.setCurrentFiatCurrencyFromCustomer({
           name: "USD",
-          valueSale: resData.usd.sell.rate,
-          valueBuy: resData.usd.buy.rate,
+          valueSale: resData.rates.opt.usd.sell,
+          valueBuy: resData.rates.opt.usd.buy,
+          valueSaleRoz: resData.rates.roz.usd.sell,
+          valueBuyRoz: resData.rates.roz.usd.buy,
           img: flagUSA
         })
       );
@@ -246,6 +280,8 @@ const Calculator: React.FC = () => {
           name: "UAH",
           valueSale: 1,
           valueBuy: 1,
+          valueSaleRoz: 1,
+          valueBuyRoz: 1,
           img: flagUA
         })
       );
@@ -274,6 +310,7 @@ const Calculator: React.FC = () => {
         return "fiat";
       }
     });
+    scrollToNode(сalcSection.current);
   }, []);
 
   const closeSWWModal = useCallback(() => {
@@ -289,7 +326,19 @@ const Calculator: React.FC = () => {
     if (сalcSection.current) {
       scrollToNode(сalcSection.current);
     }
-  }, [scrollToCalc]);
+  }, [scrollToFiatCalc, scrollToCryptoCalc]);
+
+  useEffect(() => {
+    if (scrollToFiatCalc > 0) {
+      setCalculatorType("fiat");
+    }
+  }, [scrollToFiatCalc]);
+
+  useEffect(() => {
+    if (scrollToCryptoCalc > 0) {
+      setCalculatorType("crypto");
+    }
+  }, [scrollToCryptoCalc]);
 
   if (isFetchingBinanceData || isFetchingOwnData) {
     return <Spinner />;
@@ -316,7 +365,8 @@ const Calculator: React.FC = () => {
               type="button"
               onClick={toggleCalculatorType}
             >
-              перейти в {calculatorType === "fiat" ? "криптокалькулятор" : "фиатный калькулятор"}
+              перейти в{" "}
+              {calculatorType === "fiat" ? "калькулятор криптовалют" : "калькулятор наличных валют"}
             </button>
           </div>
         </div>

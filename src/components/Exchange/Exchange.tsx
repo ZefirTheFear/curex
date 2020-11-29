@@ -137,7 +137,7 @@ const Exchange: React.FC = () => {
       <section className="exchange" ref={exchangeSection}>
         <div className="exchange__inner">
           <div className="exchange__desc">
-            Для обмена криптовалюты оставьте заявку и мы вам перезвоним. Или свяжитесь с нами по
+            Для совершения обмена оставьте заявку и мы вам перезвоним. Или свяжитесь с нами по
             данным из&nbsp;
             <span className="exchange__contact-link" onClick={scrollToContacts}>
               контактов&nbsp;

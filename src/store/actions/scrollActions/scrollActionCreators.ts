@@ -1,7 +1,11 @@
 import * as scrollActionTypes from "./scrollActionTypes";
 
-export const scrollToCalc = (): scrollActionTypes.ScrollToCalc => ({
-  type: scrollActionTypes.SCROLL_TO_CALC
+export const scrollToFiatCalc = (): scrollActionTypes.ScrollToFiatCalc => ({
+  type: scrollActionTypes.SCROLL_TO_FIAT_CALC
+});
+
+export const scrollToCryptoCalc = (): scrollActionTypes.ScrollToCryptoCalc => ({
+  type: scrollActionTypes.SCROLL_TO_CRYPTO_CALC
 });
 
 export const scrollToExchange = (): scrollActionTypes.ScrollToExchange => ({
