@@ -23,7 +23,7 @@ const navItems = (dispatch: Dispatch) => [
   //   }
   // },
   {
-    title: "обмен вылют",
+    title: "обмен валют",
     onClick: () => {
       onClick(scrollActions.scrollToFiatCalc(), dispatch);
     }
